@@ -10,25 +10,31 @@
 	background-color: cornflowerblue;
 	display: flex;
 	flex-flow: wrap;
-	justify-content: center;
-	align-items: center;
+	justify-content: space-between;
+	align-items: flex-start;
 	/* align-self:stretch; */
 	border-radius: 25px;
 	border-width:2px;
 	border-color: beige;
 	border-width: 2px;
-	border-style: solid
+	border-style: solid;
+	align-items: baseline;
 }
 
 img {
 	border-radius: 25px;
-
 }
-#head > *{
+
+#head  *{
 	/* padding: 10px; */
 	padding-left: 10px;
 	padding-right: 10px;
 	color: beige;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+	align-items: center;
+	align-content: flex-start;
 }
 
 #qa {
@@ -62,7 +68,6 @@ img {
 	width: 100%;
 }
 
-
 #answers {
 	width: 100%;
 	display: flex;
@@ -72,21 +77,48 @@ img {
 	/* align-self:stretch; */
 }
 
-
+#menu>button   {
+	border-color: beige;
+	background-color: beige;
+	opacity: 80;
+	color:  cornflowerblue;
+	padding: 20px;
+	margin: 20px;
+}
 button {
 	/* flex-basis: 100%;
 	text-align: center; */
 	padding: 20px;
 	margin: 20px;
 	/* border: 1px solid black; */
-	flex-basis: 150px;
-	flex-grow: 1;
+	/* flex-basis: 150px;
+	flex-grow: 1; */
 	white-space: normal;
     word-wrap: break-word;
 	height: 100%;
 	border-radius: 25px;
 	border-color: cornflowerblue;
 	border-width: 5px;
+	border-style: groove;
+	/* background-color: antiquewhite; */
+	opacity: 0.0;
+	color:  beige;
+}
+
+#answers>button {
+	/* flex-basis: 100%;
+	text-align: center; */
+	/* padding: 20px; */
+	/* margin: 20px; */
+	/* border: 1px solid black; */
+	flex-basis: 150px;
+	flex-grow: 1;
+	/* white-space: normal;
+    word-wrap: break-word; */
+	/* height: 100%; */
+	/* border-radius: 25px; */
+	border-color: cornflowerblue;
+	/* border-width: 5px; */
 	/* border-style: groove; */
 	border-style: groove;
 	/* background-color: antiquewhite; */
@@ -174,6 +206,8 @@ button[disabled]:not(.clicked){
 	opacity: 0.90;	
 	animation: anim_shake 5s ease infinite;
 	animation-delay: 3s;
+	flex-basis: 150px;
+	flex-grow: 1;
 }
 
 #foot >:focus:not(.clicked) {
