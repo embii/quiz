@@ -1,0 +1,305 @@
+#all * {
+	font-size: x-large;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	/* transition: all 1s; */
+	animation-iteration-count: infinite;
+}
+
+#head {
+	width: 100%;
+	background-color: cornflowerblue;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+	align-items: center;
+	/* align-self:stretch; */
+	border-radius: 25px;
+	border-width:2px;
+	border-color: beige;
+	border-width: 2px;
+	border-style: solid
+}
+
+img {
+	border-radius: 25px;
+
+}
+#head > *{
+	/* padding: 10px; */
+	padding-left: 10px;
+	padding-right: 10px;
+	color: beige;
+}
+
+#qa {
+		width: 100%;
+		background-color: beige;
+		border-radius: 25px;
+		border-width:2px;
+		border-color: cornflowerblue;
+		border-style: solid;
+		color:cornflowerblue;
+}
+#category {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#category > *{
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 100%;
+}
+#question {
+	min-height: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#question > *{
+	color: cornflowerblue;
+	padding-left: 10px;
+	padding-right: 10px;
+	/* margin: 10px; */
+	width: 100%;
+}
+
+
+#answers {
+	width: 100%;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+	align-items: center;
+	/* align-self:stretch; */
+}
+
+
+button {
+	/* flex-basis: 100%;
+	text-align: center; */
+	padding: 20px;
+	margin: 20px;
+	/* border: 1px solid black; */
+	flex-basis: 150px;
+	flex-grow: 1;
+	white-space: normal;
+    word-wrap: break-word;
+	height: 100%;
+	border-radius: 25px;
+	border-color: cornflowerblue;
+	border-width: 5px;
+	/* border-style: groove; */
+	border-style: groove;
+	/* background-color: antiquewhite; */
+	opacity: 0.0;
+	color:  beige;
+}
+
+/* button:disabled:not(.clicked) ,
+button[disabled]:not(.clicked){
+ opacity: 0.40;
+} */
+#answers >.new_answer {
+	background-color: cornflowerblue;
+	opacity: 0.80;
+}
+/* #answers >.clicked:not(.wrong) {
+	background-color:yellow;
+	
+} */
+#answers >:focus:not(.clicked) {
+	background-color: cornflowerblue;
+	border-color: dodgerblue;
+	opacity: 1;
+	animation: anim_focus 2s ;
+	transform:scale(1.1) rotate(-6deg) translateY(10px);
+	transition: cubic-bezier(0.6, -0.28, 0.735, 0.045) 2s;
+
+
+}
+#answers >:focus:not(.clicked)::after  {
+	/* content: "\1F937"; */
+	/* content: "\1F44D"; */
+	content: "\2753";
+	/* animation: anim_show 3s infinity;
+	position: relative; */
+	
+}
+
+#answers >.clicked {
+	background-color: cornflowerblue;	
+	opacity: 1;
+	animation: anim_choosen 0.5s reverse;
+	transform:scale(1.1) rotate(3deg) translateY(-10px);
+	transition: 1s all 
+}
+#answers >.clicked::before  {
+	content: "\01F354";
+}
+
+#answers >.correct {
+	/* background-color: darkseagreen;	 */
+	border-color: darkseagreen;	
+	background-color: cornflowerblue;	
+	opacity: 0.8;
+}
+
+#answers >.correct::before  {
+	content: "\2714";
+	color: darkgreen;
+	font-size: xx-large;
+}
+
+#answers >.wrong {
+	/* background-color: coral; */
+	border-color: coral;
+	background-color: cornflowerblue;	
+}
+#answers >.wrong::before  {
+	content: "\274C";
+	font-size: xx-large;
+
+}
+
+#foot {
+	width: 100%;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+#foot > button {
+	color:beige;
+	background-color: cornflowerblue;
+	opacity: 0.90;	
+	animation: anim_shake 5s ease infinite;
+	animation-delay: 3s;
+}
+
+#foot >:focus:not(.clicked) {
+	color:  beige;
+	background-color: cornflowerblue;
+	border-color: dodgerblue;
+	opacity: 1;
+}
+#next_button {
+	/* animation: anim_shake 5s ease infinite;
+	transform-origin: 50% 50%; */
+}
+
+#next_icon {
+	font-size: xx-large;	
+    position: relative;
+    animation: anim_wakeup 10s;
+	animation-direction: normal;
+	}
+@keyframes anim_wakeup {
+	0%   { opacity: 0 }
+	80%  { opacity: 0 }
+    100% { opacity: 1 }
+}
+
+@keyframes anim_shake {
+	0% { transform:translate(0,0) }
+   81% { transform:translate(5px,0) }
+   83% { transform:translate(0,0) }
+   85% { transform:translate(5px,0) }
+   87% { transform:translate(0,0) }
+   88% { transform:translate(5px,0) }
+   89% { transform:translate(0,0) }
+   100% { transform:translate(0,0) }
+ }
+
+ @keyframes anim_focus {
+	0% { transform:scale(1) rotate( 1deg);              z-index: 999; }
+   10% { transform:scale(1.1) rotate(-1deg);opacity: 1 ;z-index: 999; } 
+   35% { transform:scale(1.3) rotate(-3deg);opacity: 1 ;z-index: 999; } 
+  100% { transform:scale(1.1) rotate(-6deg) translateY(10px);opacity: 1;z-index: 999; } 
+ }
+
+ @keyframes anim_choosen {
+	0% { transform:scale(1) rotate( 3deg) translateY(-10px);z-index: 999; }
+   250% { transform:scale(1.1) rotate(-1deg);opacity: 1 ;z-index: 999; } 
+   75% { transform:scale(1.3) rotate(-3deg);opacity: 1 ;z-index: 999; } 
+  100% { transform:scale(1.1) rotate(-6deg) translateY(10px);opacity: 1;z-index: 999; } 
+ }
+
+ @keyframes    firework-animation {
+    0% {background-color : #ff8426;}
+    25% {background-color : #fffc84;}
+    50% {background-color : #ff83f4;}
+    75% {background-color : #83b6ff;}
+    100% {background-color : #ff8426;}
+}
+@-webkit-keyframes firework-animation {
+    0% {background-color : #ff8426;}
+    25% {background-color : #fffc84;}
+    50% {background-color : #ff83f4;}
+    75% {background-color : #83b6ff;}
+    100% {background-color : #ff8426;}
+}
+@keyframes 			firework-animation {
+	0% {background-color : #ff8426;}
+	25% {background-color : #fffc84;}
+	50% {background-color : #ff83f4;}
+	75% {background-color : #83b6ff;}
+	100% {background-color : #ff8426;}
+}
+@-webkit-keyframes 	firework-animation {
+	0% {background-color : #ff8426;}
+	25% {background-color : #fffc84;}
+	50% {background-color : #ff83f4;}
+	75% {background-color : #83b6ff;}
+	100% {background-color : #ff8426;}
+}
+@keyframes 			firework-seed-animation	{
+	0% {background-color : #ff8426;}
+	25% {background-color : #fffc84;}
+	100% {background-color : #ff8426;}
+}
+@-webkit-keyframes	firework-seed-animation	{
+	0% {background-color : #ff8426;}
+	25% {background-color : #fffc84;}
+	100% {background-color : #ff8426;}
+}
+@keyframes 			firework-fade-animation {
+	0% {opacity : 1;}
+	50% {opacity : 1;}
+	100% {opacity : 0;}
+}
+@-webkit-keyframes 	firework-fade-animation {
+	0% {opacity : 1;}
+	50% {opacity : 1;}
+	100% {opacity : 0;}
+}
+.fireWorkBatch {
+	z-index : 999;
+	position: absolute;
+	top : 0px;
+	left : 0px;
+	animation-name : firework-fade-animation;
+	animation-timing-function : cubic-bezier(0.5, 0, 1. 1);
+	animation-duration : 2.5s;
+}
+.fireWorkParticle {
+	z-index : 999;
+	position: absolute;
+	height : 5px;
+	width : 5px;
+	border-radius : 2.5px;
+	animation-name : firework-animation;
+	animation-timing-function : linear;
+	animation-duration : 1s;
+	animation-iteration-count : infinite;
+}
+.fireWorkSeed {
+	z-index : 999;
+	position: absolute;
+	height : 5px;
+	width : 5px;
+	border-radius : 5px;
+	animation-name : firework-seed-animation;
+	animation-timing-function : linear;
+	animation-duration : 0.5s;
+	animation-iteration-count : infinite;
+}
