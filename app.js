@@ -10,6 +10,7 @@ const dlyScore = 1;
 const dlyLoad = 1;
 
 const allDsp = document.querySelector("#all");
+const qaDsp = document.querySelector("#qa");
 const questionDsp = document.querySelector("#question p");
 const answersDsp = document.querySelector("#answers");
 const scoreDsp = document.querySelector("#score");
@@ -81,7 +82,7 @@ const putQuestion = (question) => {
 	answersDsp.innerHTML = '';
 	questionDsp.innerHTML = question.question;
 	footDsp.innerHTML = '';
-	categoryDsp.innerHTML= `Category: "${question.category}"`;
+	categoryDsp.innerHTML= `Category: "${question.category}" Difficulty: ${question.difficulty}`;
 	allAnswers.push(...question.incorrect_answers);
 	allAnswers.push(question.correct_answer);
 
@@ -124,7 +125,7 @@ async function checkAnswer(question, btn) {
 	if (he.decode(question.correct_answer).trim() === btn.innerText.trim()) {
 		score++;
 		playSound('res\\Quiz-correct-sound-with-applause.mp3');
-		fireworksInitiate();
+		// fireworksInitiate();
 	} else {
 		btn.classList.add("wrong");
 		playSound('res\\Fail-trombone.mp3');
@@ -185,6 +186,11 @@ function delay(n) {
 		setTimeout(resolve, n * 1000);
 	});
 };
+
+function sorter(a,b) {
+	const order=['easy', 'medium', 'hard'];
+	return (order.indexOf(a.difficulty) - order.indexOf(b.difficulty));
+}
 async function runTheQuizz() {
 	for (let i = 0; i < 10; i++) {
 		if (questions.length < 1) {
@@ -197,6 +203,10 @@ async function runTheQuizz() {
 		console.log('no data, restart the game');
 	}
 	else {
+		// questions.sort((a,b)=>{
+		// 	return(sorter(a,b));
+		// });
+		questions.sort(sorter);
 		console.log(questions);
 		nextQuestion();
 	}
@@ -320,5 +330,11 @@ function start() {
 	nextBtn.innerHTML = "YES, start the quiz";
 };
 
+
 // initialize();
-start();
+
+
+document.addEventListener("DOMContentLoaded", function(){
+	start();
+	initializeMenu();	
+});

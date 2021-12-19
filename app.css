@@ -1,5 +1,5 @@
 #all * {
-	font-size: x-large;
+	font-size: large;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	/* transition: all 1s; */
 	animation-iteration-count: infinite;
@@ -25,7 +25,7 @@ img {
 	border-radius: 25px;
 }
 
-#head  *{
+#head * {
 	/* padding: 10px; */
 	padding-left: 10px;
 	padding-right: 10px;
@@ -38,28 +38,33 @@ img {
 }
 
 #qa {
-		width: 100%;
-		background-color: beige;
-		border-radius: 25px;
-		border-width:2px;
-		border-color: cornflowerblue;
-		border-style: solid;
-		color:cornflowerblue;
+	width: 100%;
+	background-color: beige;
+	border-radius: 25px;
+	border-width:2px;
+	border-color: cornflowerblue;
+	border-style: solid;
+	color:cornflowerblue;
 }
+
 #category {
 	padding-left: 10px;
 	padding-right: 10px;
 }
+
 #category > *{
 	padding-left: 10px;
 	padding-right: 10px;
 	width: 100%;
 }
+
 #question {
 	min-height: 20px;
 	padding-left: 10px;
 	padding-right: 10px;
+	font-weight: bold;
 }
+
 #question > *{
 	color: cornflowerblue;
 	padding-left: 10px;
@@ -82,9 +87,11 @@ img {
 	background-color: beige;
 	opacity: 80;
 	color:  cornflowerblue;
-	padding: 20px;
-	margin: 20px;
+	padding: 10px 20px 10px 20px ;
+	/* padding: 10px; */
+	margin: 5px;
 }
+
 button {
 	/* flex-basis: 100%;
 	text-align: center; */
@@ -130,14 +137,17 @@ button {
 button[disabled]:not(.clicked){
  opacity: 0.40;
 } */
+
 #answers >.new_answer {
 	background-color: cornflowerblue;
 	opacity: 0.80;
 }
+
 /* #answers >.clicked:not(.wrong) {
 	background-color:yellow;
 	
 } */
+
 #answers >:focus:not(.clicked) {
 	background-color: cornflowerblue;
 	border-color: dodgerblue;
@@ -145,16 +155,14 @@ button[disabled]:not(.clicked){
 	animation: anim_focus 2s ;
 	transform:scale(1.1) rotate(-6deg) translateY(10px);
 	transition: cubic-bezier(0.6, -0.28, 0.735, 0.045) 2s;
-
-
 }
+
 #answers >:focus:not(.clicked)::after  {
 	/* content: "\1F937"; */
 	/* content: "\1F44D"; */
 	content: "\2753";
 	/* animation: anim_show 3s infinity;
-	position: relative; */
-	
+	position: relative; */	
 }
 
 #answers >.clicked {
@@ -164,6 +172,7 @@ button[disabled]:not(.clicked){
 	transform:scale(1.1) rotate(3deg) translateY(-10px);
 	transition: 1s all 
 }
+
 #answers >.clicked::before  {
 	content: "\01F354";
 }
@@ -178,7 +187,6 @@ button[disabled]:not(.clicked){
 #answers >.correct::before  {
 	content: "\2714";
 	color: darkgreen;
-	font-size: xx-large;
 }
 
 #answers >.wrong {
@@ -186,10 +194,9 @@ button[disabled]:not(.clicked){
 	border-color: coral;
 	background-color: cornflowerblue;	
 }
+
 #answers >.wrong::before  {
 	content: "\274C";
-	font-size: xx-large;
-
 }
 
 #foot {
@@ -216,17 +223,18 @@ button[disabled]:not(.clicked){
 	border-color: dodgerblue;
 	opacity: 1;
 }
+
 #next_button {
 	/* animation: anim_shake 5s ease infinite;
 	transform-origin: 50% 50%; */
 }
 
 #next_icon {
-	font-size: xx-large;	
     position: relative;
     animation: anim_wakeup 10s;
 	animation-direction: normal;
-	}
+}
+
 @keyframes anim_wakeup {
 	0%   { opacity: 0 }
 	80%  { opacity: 0 }
@@ -337,3 +345,70 @@ button[disabled]:not(.clicked){
 	animation-duration : 0.5s;
 	animation-iteration-count : infinite;
 }
+
+
+/* The Overlay (background) */
+.overlay {
+	/* Height & width depends on how you want to reveal the overlay (see JS below) */   
+	height: 100%;
+	width: 0;
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	background-color: rgb(0,0,50); /* Black fallback color */
+	background-color: rgba(0,0,40, 0.9); /* Black w/opacity */
+	overflow-x: hidden; /* Disable horizontal scroll */
+	transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+	color:  dimgrey ;
+  }
+  .overlay * {
+	opacity: 1;
+  }
+
+/* Position the content inside the overlay */
+.overlay-content {
+	position: relative;
+	top: 25%; /* 25% from the top */
+	width: 100%; /* 100% width */
+	text-align: center; /* Centered text/links */
+	margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay button {
+	padding: 0px 30px 0px 30px ;
+	/* margin: 1px 50px 1px 50px ; */
+	text-decoration: none;
+	font-size: small;
+	color:  dimgrey ;
+	/* background-color:lightslategray; */
+	background-color:lightsteelblue;
+
+	display: block; /* Display block instead of inline */
+	transition: 0.3s; /* Transition effects on hover (color) */
+	height: 50px;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .overlay button:hover, .overlay button:focus {
+	color: white;
+	background-color: #83b6ff;
+  }
+  
+  /* Position the close button (top right corner) */
+  .overlay .closebtn {
+	position: absolute;
+	top: 20px;
+	right: 45px;
+  }
+  
+  /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+  @media screen and (max-height: 450px) {
+	.overlay button {font-size: 20px}
+	.overlay .closebtn {
+	  font-size: 40px;
+	  top: 15px;
+	  right: 35px;
+	}
+  }

@@ -14,34 +14,28 @@ const v = 0.3;
 const cursorXOffset = 5;
 const cursorYOffset = 0;
 
-
-function newFireworkParticle(x, y, angle)
-{
+function newFireworkParticle(x, y, angle) {
     var fwkPtc = document.createElement("DIV");
     fwkPtc.setAttribute('class', 'fireWorkParticle');
     fwkPtc.time = fwkPtcIniT;
-    while(angle > 360)
+    while (angle > 360)
         angle -= 360;
-    while(angle < 0)
+    while (angle < 0)
         angle += 360;
     fwkPtc.velocity = [];
-    if(angle > 270)
-    {
+    if (angle > 270) {
         fwkPtc.velocity.x = fwkPtcIniV * Math.sin(angle * Math.PI / 180) * (1 - Math.random() * v);
         fwkPtc.velocity.y = fwkPtcIniV * Math.cos(angle * Math.PI / 180) * (1 - Math.random() * v);
     }
-    else if(angle > 180)
-    {
+    else if (angle > 180) {
         fwkPtc.velocity.x = fwkPtcIniV * Math.sin(angle * Math.PI / 180) * (1 - Math.random() * v);
         fwkPtc.velocity.y = fwkPtcIniV * Math.cos(angle * Math.PI / 180) * (1 - Math.random() * v);
     }
-    else if(angle > 90)
-    {
+    else if (angle > 90) {
         fwkPtc.velocity.x = fwkPtcIniV * Math.sin(angle * Math.PI / 180) * (1 - Math.random() * v);
         fwkPtc.velocity.y = fwkPtcIniV * Math.cos(angle * Math.PI / 180) * (1 - Math.random() * v);
     }
-    else
-    {
+    else {
         fwkPtc.velocity.x = fwkPtcIniV * Math.sin(angle * Math.PI / 180) * (1 - Math.random() * v);
         fwkPtc.velocity.y = fwkPtcIniV * Math.cos(angle * Math.PI / 180) * (1 - Math.random() * v);
     }
@@ -50,26 +44,22 @@ function newFireworkParticle(x, y, angle)
     fwkPtc.position.y = y;
     fwkPtc.style.left = fwkPtc.position.x + 'px';
     fwkPtc.style.top = fwkPtc.position.y + 'px';
-    if(particles == null)
+    if (particles == null)
         particles = [];
     particles.push(fwkPtc);
     return fwkPtc;
 }
 
-document.addEventListener("click", newFireWorkOnClick);
+// document.addEventListener("click", newFireWorkOnClick);
 
-function newFireWorkOnClick(event)
-{
+function newFireWorkOnClick(event) {
     // newFireworkSeed(event.pageX - brd.offsetLeft + cursorXOffset, event.pageY - brd.offsetTop + cursorYOffset);
     // newFireworkSeed(event.pageX , event.pageY);
     // newFireworkSeed(200, 200);
-    // fireworksInitiate();
+    fireworksInitiate();
 }
 
-    
-
-function newFireworkSeed(x, y)
-{
+function newFireworkSeed(x, y) {
     var fwkSed = document.createElement("DIV");
     fwkSed.setAttribute('class', 'fireWorkSeed');
     brd.appendChild(fwkSed);
@@ -82,19 +72,17 @@ function newFireworkSeed(x, y)
     fwkSed.position.y = y;
     fwkSed.style.left = fwkSed.position.x + 'px';
     fwkSed.style.top = fwkSed.position.y + 'px';
-    if(seeds == null)
+    if (seeds == null)
         seeds = [];
     seeds.push(fwkSed);
     return fwkSed;
 }
 
-function newFireWorkStar(x, y)
-{
+function newFireWorkStar(x, y) {
     var fwkBch = document.createElement("DIV");
     fwkBch.setAttribute('class', 'fireWorkBatch');
     var a = 0;
-    while(a < 360)
-    {
+    while (a < 360) {
         var fwkPtc = newFireworkParticle(x, y, a);
         fwkBch.appendChild(fwkPtc);
         a += 5;
@@ -105,17 +93,14 @@ function newFireWorkStar(x, y)
 var before = Date.now();
 var id = setInterval(frame, 5);
 
-function frame()
-{
+function frame() {
     var current = Date.now();
     var deltaTime = current - before;
     before = current;
-    for(i in seeds)
-    {
+    for (i in seeds) {
         var fwkSed = seeds[i];
         fwkSed.time -= deltaTime;
-        if(fwkSed.time > 0)
-        {
+        if (fwkSed.time > 0) {
             fwkSed.velocity.x -= fwkSed.velocity.x * a * deltaTime;
             fwkSed.velocity.y -= g * deltaTime + fwkSed.velocity.y * a * deltaTime;
             fwkSed.position.x += fwkSed.velocity.x * deltaTime;
@@ -123,19 +108,16 @@ function frame()
             fwkSed.style.left = fwkSed.position.x + 'px';
             fwkSed.style.top = fwkSed.position.y + 'px';
         }
-        else
-        {
+        else {
             newFireWorkStar(fwkSed.position.x, fwkSed.position.y);
             fwkSed.parentNode.removeChild(fwkSed);
             seeds.splice(i, 1);
         }
     }
-    for(i in particles)
-    {
+    for (i in particles) {
         var fwkPtc = particles[i];
         fwkPtc.time -= deltaTime;
-        if(fwkPtc.time > 0)
-        {
+        if (fwkPtc.time > 0) {
             fwkPtc.velocity.x -= fwkPtc.velocity.x * a * deltaTime;
             fwkPtc.velocity.y -= g * deltaTime + fwkPtc.velocity.y * a * deltaTime;
             fwkPtc.position.x += fwkPtc.velocity.x * deltaTime;
@@ -143,28 +125,22 @@ function frame()
             fwkPtc.style.left = fwkPtc.position.x + 'px';
             fwkPtc.style.top = fwkPtc.position.y + 'px';
         }
-        else
-        {
+        else {
             fwkPtc.parentNode.removeChild(fwkPtc);
             particles.splice(i, 1);
         }
     }
 }
 
-function fireworksInitiate(minCount=1, maxCount=3, minDelay=200, maxDelay=1000)
-{
-    var cnt = Math.floor(Math.random() * (maxCount-minCount+1) + minCount) ;
-
-    for (var i=0;i<cnt;i++){
-        // var posx = Math.floor(Math.random() * window.innerWidth) ;
-        // var posy = Math.floor(Math.random() * window.innerHeight) ;   
-       var posx = Math.floor(Math.random() * allDsp.offsetWidth) ;
-        var posy = Math.floor(Math.random() * allDsp.offsetHeight) ;   
-        var dly = Math.floor(Math.random() * (maxDelay-minDelay+1) + minDelay) ;   
-        setTimeout(()=>{
-            newFireworkSeed(posx,posy);
-        },dly);
+function fireworksInitiate(minCount = 3, maxCount = 5, minDelay = 200, maxDelay = 1000) {
+    var cnt = Math.floor(Math.random() * (maxCount - minCount + 1) + minCount);
+    for (var i = 0; i < cnt; i++) {
+  
+        setTimeout(() => {      
+            const posx = Math.floor(Math.random() * (qaDsp.offsetWidth - 20) +10 +qaDsp.offsetLeft);
+            const posy = Math.floor(Math.random() * (qaDsp.offsetHeight - 20) +10 +qaDsp.offsetTop)  ;            
+            console.log(`${i} x:${posx} y:${posy} ${qaDsp.offsetLeft} ${qaDsp.offsetTop} ${qaDsp.offsetWidth} ${qaDsp.offsetHeight}`); 
+            newFireworkSeed(posx, posy);
+        }, Math.floor(Math.random() * (maxDelay - minDelay + 1) + minDelay));
     }
-    
 }
-

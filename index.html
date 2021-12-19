@@ -11,8 +11,30 @@
 </head>
 
 <body>
+<!-- The overlay -->
+
 
   <div id="all">
+    <div id="myNav" class="overlay">
+      <!-- Button to close the overlay navigation -->
+      <button class="closebtn" onclick="closeMenu()">Close</button>
+      <!-- Overlay content -->
+      <div class="overlay-content">
+        <button id="menu_info" type="button">
+          Info
+        </button>
+        <div id="menu_info_content">
+        </div>
+      </div>
+      <div class="overlay-content">
+        <button id="menu_clean_storage" type="button">
+          Clean local storage
+        </button>
+        <div id="menu_clean_storage_content">
+        </div>
+      </div>
+    </div>
+    
     <div id="head">
       <div>
         <h1>the quiz</h1>
@@ -28,7 +50,7 @@
         </h1>
       </div>
       <div id="menu">
-        <button type="button">
+        <button id="menu_main" type="button">
           &#x2630;
         </button>
       </div>
@@ -53,12 +75,10 @@
     </div>
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="  https://cdnjs.cloudflare.com/ajax/libs/he/1.2.0/he.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/he/1.2.0/he.min.js"></script>
   <script src="app.js"></script>
+  <script src="app_menu.js"></script>
   <script src="helper.js"></script>
-  <script src="fireworks.js"></script>
-
+  <!-- <script src="fireworks.js"></script> -->
 </body>
-
 </html>
