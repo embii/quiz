@@ -91,8 +91,11 @@ const putQuestion = (question) => {
 		answerBtn.type = 'button';
 		answerBtn.id = `answer${idx}`;
 		answerBtn.classList.add("new_answer");
-		answerBtn.addEventListener("mouseenter", function (event) {
+		answerBtn.addEventListener("focus", function (event) {
 			playSound();
+		})
+
+		answerBtn.addEventListener("mouseenter", function (event) {
 			event.target.focus();	
 		})
 		answerBtn.addEventListener("click", function (event) {
@@ -229,7 +232,7 @@ const finalScore = () => {
 		}
 	}
 	if (isMax==1){
-		fireworksInitiate(5,15, 200,3000);
+		// fireworksInitiate(5,15, 200,3000);
 		playSound("res\\Wow-sound-effect.mp3");
 	}else{
 		playSound("res\\Goal-horn-sound-effect.mp3");

@@ -1,31 +1,59 @@
 function initializeMenu() {
     const menuMain = document.querySelector("#menu_main");
     menuMain.addEventListener("click", () => {
-        console.log("menu_main");
         openMenu();
+    })
+    const menuClose = document.querySelector("#menu_close");
+    menuClose.addEventListener("click", () => {
+        closeMenu();
     })
     const menuInfo = document.querySelector("#menu_info");
     menuInfo.addEventListener("click", () => {
-        console.log("menu_info");
-        const content = document.querySelector("#menu_info_content");
-        var txt = document.createElement('p');
-        maxScore=storage.getItem(`MAX_SCORE`);
-        txt.innerHTML=`Max. score: ${maxScore}`;
-        content.appendChild(txt);
-        var txt = document.createElement('p');
-        apiToken=storage.getItem(`apiToken`);
-        txt.innerHTML=`API Token: ${apiToken}`;
-        content.appendChild(txt);
-
+        infoMenu();
+    })
+    const menuClearStorage = document.querySelector("#menu_clean_storage");
+    menuClearStorage.addEventListener("click", () => {
+        clearStorageMenu();
     })
 };
 
+function appendMenuTxt(txt=""){
+    const content = document.querySelector("#menu_txt");
+    const txtDsp = document.createElement('p');
+    txtDsp.innerHTML=txt;
+    content.appendChild(txtDsp);
+}
+function clearMenuTxt(){
+    const content = document.querySelector("#menu_txt");
+    content.innerHTML="";
+}
+
 function openMenu() {
+    clearMenuTxt();
+    const menuClose = document.querySelector("#menu_close");
+    menuClose.focus();
     document.getElementById("myNav").style.width = "100%";
+    
 }
 function closeMenu() {
     document.getElementById("myNav").style.width = "0%";
 }
-function showTechInfo() {
+
+function infoMenu(){
+    clearMenuTxt();
+    appendMenuTxt(`Quiz URL: ${quizzUrl}`);
+    appendMenuTxt(`Local storage:`);
+    for (const [key, value] of Object.entries(storage)){
+        appendMenuTxt(` - ${key}: ${value}`);    
+    }; 
 }
 
+function clearStorageMenu(){
+    clearMenuTxt();
+    if(storage){
+		storage.clear();
+        appendMenuTxt(`Local storage cleared.`);
+	}else{
+        appendMenuTxt(`Local storage is not available in this browser.`);
+    }
+}
