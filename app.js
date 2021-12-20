@@ -145,7 +145,7 @@ async function checkAnswer(question, btn) {
 	if (he.decode(question.correct_answer).trim() === btn.innerText.trim()) {
 		score++;
 		playSound('res\\Quiz-correct-sound-with-applause.mp3');
-		// fireworksInitiate();
+		fireworksInitiate();
 	} else {
 		btn.classList.add("wrong");
 		playSound('res\\Fail-trombone.mp3');
@@ -242,7 +242,7 @@ const finalScore = () => {
 		}
 	}
 	if (isMax == 1) {
-		// fireworksInitiate(5,15, 200,3000);
+		fireworksInitiate(5,15, 200,3000);
 		playSound("res\\Wow-sound-effect.mp3");
 	} else {
 		playSound("res\\Goal-horn-sound-effect.mp3");

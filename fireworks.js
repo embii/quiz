@@ -56,7 +56,7 @@ function newFireWorkOnClick(event) {
     // newFireworkSeed(event.pageX - brd.offsetLeft + cursorXOffset, event.pageY - brd.offsetTop + cursorYOffset);
     // newFireworkSeed(event.pageX , event.pageY);
     // newFireworkSeed(200, 200);
-    fireworksInitiate();
+    // fireworksInitiate();
 }
 
 function newFireworkSeed(x, y) {
@@ -85,7 +85,7 @@ function newFireWorkStar(x, y) {
     while (a < 360) {
         var fwkPtc = newFireworkParticle(x, y, a);
         fwkBch.appendChild(fwkPtc);
-        a += 5;
+        a += 2;
     }
     brd.appendChild(fwkBch);
 }
@@ -124,6 +124,13 @@ function frame() {
             fwkPtc.position.y -= fwkPtc.velocity.y * deltaTime;
             fwkPtc.style.left = fwkPtc.position.x + 'px';
             fwkPtc.style.top = fwkPtc.position.y + 'px';
+            // console .log(fwkPtc);
+            if  (fwkPtc.position.y>qaDsp.offsetHeight+qaDsp.offsetTop || fwkPtc.position.x>qaDsp.offsetWidth+qaDsp.offsetLeft) {
+                fwkPtc.parentNode.removeChild(fwkPtc);
+                particles.splice(i, 1);
+                // console .log(`removed  ${i}`);
+                // console .log(fwkPtc);
+            }
         }
         else {
             fwkPtc.parentNode.removeChild(fwkPtc);
@@ -132,7 +139,7 @@ function frame() {
     }
 }
 
-function fireworksInitiate(minCount = 3, maxCount = 5, minDelay = 200, maxDelay = 1000) {
+function fireworksInitiate(minCount = 1, maxCount = 3, minDelay = 200, maxDelay = 1000) {
     var cnt = Math.floor(Math.random() * (maxCount - minCount + 1) + minCount);
     for (var i = 0; i < cnt; i++) {
   
