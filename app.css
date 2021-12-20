@@ -1,6 +1,8 @@
 #all * {
 	font-size: large;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	/* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+	font-family: 'Architects Daughter', cursive;
+	
 	/* transition: all 1s; */
 	animation-iteration-count: 1;
 }
