@@ -8,6 +8,7 @@ var questionNr = 0;
 
 const dlyScore = 1;
 const dlyLoad = 1;
+var categories = [];
 
 const allDsp = document.querySelector("#all");
 const qaDsp = document.querySelector("#qa");
@@ -22,14 +23,15 @@ var apiToken = null;
 
 // const quizzUrl='https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple';
 // const quizzUrl = `https://opentdb.com/api.php?amount=10&type=multiple&category=30`;
-const quizzUrl = `https://opentdb.com/api.php?amount=10&type=multiple`;
+var quizzUrl = `https://opentdb.com/api.php?amount=10&type=multiple`;
+var maxScore = null;
 
 const fetchApiToken = (url = 'https://opentdb.com/api_token.php?command=request') => {
 	console.log(url);
 	return axios.get(url);
 };
 
-const fetchNextQuizz = (url = 'https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple') => {
+const fetchNextQuizz = (url = quizzUrl) => {
 	console.log(url);
 	if (apiToken == null && storage != null) {
 		fetchApiToken()
@@ -37,7 +39,7 @@ const fetchNextQuizz = (url = 'https://opentdb.com/api.php?amount=10&category=9&
 				console.log(data);
 				if (data.response_code == 0) {
 					apiToken = data.token;
-					storage.setItem('apiToken', apiToken);
+					storage.setItem('API_TOKEN', apiToken);
 					console.log(`Fetched API Token: ${apiToken}`);
 					return Promise.resolve(data.token);
 				} else {
@@ -65,13 +67,25 @@ const printQuizz = ({ data }) => {
 	}
 };
 
-function playSound(file = 'res\\button-11.mp3'){
+const fetchCategories = (url = 'https://opentdb.com/api_category.php') => {
+	console.log(url);
+	return axios.get(`${url}`);
+};
+const printCategories = ({ data }) => {
+	categories = [];
+	console.log(data);
+	for (let category of data.trivia_categories) {
+		categories.push(category);
+	}
+	return Promise.resolve(categories);
+};
+
+function playSound(file = 'res\\button-11.mp3') {
 	const audio = new Audio(file);
-	audio.autoplay="true";
+	audio.autoplay = "true";
 	// audio.muted="false";
 	audio.play();
 };
-
 
 const putQuestion = (question) => {
 	console.log(question);
@@ -82,7 +96,7 @@ const putQuestion = (question) => {
 	answersDsp.innerHTML = '';
 	questionDsp.innerHTML = question.question;
 	footDsp.innerHTML = '';
-	categoryDsp.innerHTML= `Category: "${question.category}" Difficulty: ${question.difficulty}`;
+	categoryDsp.innerHTML = `Category: "${question.category}" Difficulty: ${question.difficulty}`;
 	allAnswers.push(...question.incorrect_answers);
 	allAnswers.push(question.correct_answer);
 
@@ -96,12 +110,15 @@ const putQuestion = (question) => {
 		})
 
 		answerBtn.addEventListener("mouseenter", function (event) {
-			event.target.focus();	
+			event.target.focus();
 		})
 		answerBtn.addEventListener("click", function (event) {
 			playSound('res\\Button-click-sound.mp3');
 			checkAnswer(question, event.target);
 		});
+		// answerBtn.style.animation="anim_hickup 1s ease infinite";
+		// answerBtn.style.animationDelay="1s";
+
 		answersDsp.appendChild(answerBtn);
 		answerBtn.innerHTML = answer;
 	})
@@ -132,7 +149,7 @@ async function checkAnswer(question, btn) {
 	} else {
 		btn.classList.add("wrong");
 		playSound('res\\Fail-trombone.mp3');
-	
+
 	}
 	console.log(score);
 	scoreDsp.innerHTML = score;
@@ -160,12 +177,10 @@ function afterAnswer() {
 	});
 	nextBtn.innerHTML = "<span id=next_button>Continue</span>";
 	nextBtnIcon.innerHTML = " &#x1F634;";
-	nextBtnIcon.id="next_icon";
+	nextBtnIcon.id = "next_icon";
 	nextBtn.appendChild(nextBtnIcon);
 	footDsp.appendChild(nextBtn);
-	
 	nextBtn.focus();
-
 };
 function afterQuizz() {
 	const nextBtn = document.createElement('button');
@@ -190,8 +205,8 @@ function delay(n) {
 	});
 };
 
-function sorter(a,b) {
-	const order=['easy', 'medium', 'hard'];
+function sorter(a, b) {
+	const order = ['easy', 'medium', 'hard'];
 	return (order.indexOf(a.difficulty) - order.indexOf(b.difficulty));
 }
 async function runTheQuizz() {
@@ -206,40 +221,33 @@ async function runTheQuizz() {
 		console.log('no data, restart the game');
 	}
 	else {
-		// questions.sort((a,b)=>{
-		// 	return(sorter(a,b));
-		// });
 		questions.sort(sorter);
-		console.log(questions);
 		nextQuestion();
 	}
 };
 const finalScore = () => {
-
 	categoryDsp.innerHTML = "That was the last question.";
 	questionDsp.innerHTML = "";
-	var isMax=0;
-	if(storage){
+	var isMax = 0;
+	if (storage) {
 
 		// maxScore=storage.getItem(`MAX_SCORE_${category}`);
-		maxScore=storage.getItem(`MAX_SCORE`);
-		if((maxScore==null) || (score>maxScore)){
-			isMax=1;
+		maxScore = storage.getItem(`MAX_SCORE`);
+		if ((maxScore == null) || (score > maxScore)) {
+			isMax = 1;
 			// storage.setItem(`MAX_SCORE_${category}`, score);
 			storage.setItem(`MAX_SCORE`, score);
 			// questionDsp.innerHTML = `This is highest score in category ${category}`;
 			questionDsp.innerHTML = `This is highest score`;
 		}
 	}
-	if (isMax==1){
+	if (isMax == 1) {
 		// fireworksInitiate(5,15, 200,3000);
 		playSound("res\\Wow-sound-effect.mp3");
-	}else{
+	} else {
 		playSound("res\\Goal-horn-sound-effect.mp3");
 	}
-
 	afterQuizz();
-
 };
 
 function nextQuestion() {
@@ -249,10 +257,10 @@ function nextQuestion() {
 		finalScore();
 	}
 };
+
 function shuffleAnswers(answers) {
 	var m = answers.length;
 	var i;
-
 	// While there remain elements to shuffle…
 	while (m) {
 		// Pick a remaining element…
@@ -264,8 +272,8 @@ function shuffleAnswers(answers) {
 };
 
 function initialize() {
-	if(storage){
-		apiToken = storage.getItem('apiToken');
+	if (storage) {
+		apiToken = storage.getItem('API_TOKEN');
 	}
 	score = 0;
 	questionNr = 0;
@@ -273,7 +281,7 @@ function initialize() {
 		.then(printQuizz)
 		.catch((err) => {
 			console.log('ERROR when fetching quiz!', err);
-			storage.removeItem('apiToken');
+			storage.removeItem('API_TOKEN');
 			console.log('resetting API token');
 
 		});
@@ -281,41 +289,35 @@ function initialize() {
 }
 
 function storageAvailable(type) {
-    var storage;
-    try {
-        storage = window[type];
-        var x = '__storage_test__';
-        storage.setItem(x, x);
-        storage.removeItem(x);
-        return true;
-    }
-    catch(e) {
-        return e instanceof DOMException && (
-            // everything except Firefox
-            e.code === 22 ||
-            // Firefox
-            e.code === 1014 ||
-            // test name field too, because code might not be present
-            // everything except Firefox
-            e.name === 'QuotaExceededError' ||
-            // Firefox
-            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
-            // acknowledge QuotaExceededError only if there's something already stored
-            (storage && storage.length !== 0);
-    }
+	var storage;
+	try {
+		storage = window[type];
+		var x = '__storage_test__';
+		storage.setItem(x, x);
+		storage.removeItem(x);
+		return true;
+	}
+	catch (e) {
+		return e instanceof DOMException && (
+			// everything except Firefox
+			e.code === 22 ||
+			// Firefox
+			e.code === 1014 ||
+			// test name field too, because code might not be present
+			// everything except Firefox
+			e.name === 'QuotaExceededError' ||
+			// Firefox
+			e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+			// acknowledge QuotaExceededError only if there's something already stored
+			(storage && storage.length !== 0);
+	}
 }
-if (storageAvailable('localStorage')) {
-	// Yippee! We can use localStorage awesomeness
-	storage=window.localStorage;
-  }
-  else {
-	alert('Too bad, no localStorage for us');
-  }
+
 
 function start() {
 	const nextBtn = document.createElement('button');
-	const img=document.createElement('img');
-    img.src='res\\thinking-gif-2018-31.gif';
+	const img = document.createElement('img');
+	img.src = 'res\\thinking-gif-2018-31.gif';
 	nextBtn.type = 'button';
 	nextBtn.classList.add("new_answer");
 	nextBtn.addEventListener("mouseenter", function (event) {
@@ -333,11 +335,19 @@ function start() {
 	nextBtn.innerHTML = "YES, start the quiz";
 };
 
-
 // initialize();
 
-
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
+	if (storageAvailable('localStorage')) {
+		// Yippee! We can use localStorage awesomeness
+		storage = window.localStorage;
+		quizzUrl = storage.getItem("QUIZ_URL") ?? quizzUrl;
+		maxScore = storage.getItem("MAX_SCORE") ?? maxScore;
+		apiToken = storage.getItem("API_TOKEN") ?? apiToken;
+	}
+	else {
+		alert('Too bad, no localStorage for us');
+	}
 	start();
-	initializeMenu();	
+	initializeMenu();
 });

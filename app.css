@@ -2,7 +2,7 @@
 	font-size: large;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	/* transition: all 1s; */
-	animation-iteration-count: infinite;
+	animation-iteration-count: 1;
 }
 
 #menu_main:focus{
@@ -172,9 +172,9 @@ button[disabled]:not(.clicked){
 #answers >.clicked {
 	background-color: cornflowerblue;	
 	opacity: 1;
-	animation: anim_choosen 0.5s reverse;
+	/* animation: anim_choosen 0.5s reverse;
 	transform:scale(1.1) rotate(3deg) translateY(-10px);
-	transition: 1s all 
+	transition: 1s all  */
 }
 
 #answers >.clicked::before  {
@@ -185,6 +185,9 @@ button[disabled]:not(.clicked){
 	border-color: darkseagreen;	
 	background-color: cornflowerblue;	
 	opacity: 0.8;
+		/* animation: anim_choosen 0.5s reverse; */
+	transform:scale(1.1) rotate(0deg) translateY(0px);
+	transition: 1s all  
 }
 
 #answers >.correct::before  {
@@ -196,6 +199,10 @@ button[disabled]:not(.clicked){
 	/* background-color: ; */
 	border-color: coral;
 	background-color: cornflowerblue;	
+	/* animation: anim_choosen 0.5s reverse; */
+	transform:scale(1.0) rotate(20deg) translateY(50px) ;
+	z-index: 1000;
+	transition: 2s all 
 }
 
 #answers >.wrong::before  {
@@ -267,6 +274,12 @@ button[disabled]:not(.clicked){
    250% { transform:scale(1.1) rotate(-1deg);opacity: 1 ;z-index: 999; } 
    75% { transform:scale(1.3) rotate(-3deg);opacity: 1 ;z-index: 999; } 
   100% { transform:scale(1.1) rotate(-6deg) translateY(10px);opacity: 1;z-index: 999; } 
+ }
+
+ @keyframes hickup {
+	 0% { transform:scale(1.0) translateY(0px)}
+	30% { transform:scale(1.1) translateY(-10px)}
+   100% { transform:scale(1.0) translateY(0px)} 
  }
 
  @keyframes    firework-animation {
@@ -356,7 +369,7 @@ button[disabled]:not(.clicked){
 	height: 100%;
 	width: 0;
 	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
+	z-index: 1001; /* Sit on top */
 	left: 0;
 	top: 0;
 	background-color: rgb(0,0,50); /* Black fallback color */
@@ -365,6 +378,7 @@ button[disabled]:not(.clicked){
 	transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
 	color:  dimgrey ;
 }
+
 
 .overlay * {
 	opacity: 1;
@@ -387,12 +401,12 @@ button[disabled]:not(.clicked){
 	width: 100%; /* 100% width */
 	text-align: center; /* Centered text/links */
 	margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
-
 }
 
 /* The navigation links inside the overlay */
 .overlay button {
-	padding: 0px 30px 0px 30px ;
+	padding: 0px 20px 0px 20px ;
+	margin: 10px;
 	/* margin: 1px 50px 1px 50px ; */
 	text-decoration: none;
 	font-size: small;
@@ -401,7 +415,7 @@ button[disabled]:not(.clicked){
 	background-color:lightsteelblue;
 	/* display: block; Display block instead of inline */
 	transition: 0.3s; /* Transition effects on hover (color) */
-	height: 50px;
+	min-height: 50px;
   }
   
   /* When you mouse over the navigation links, change their color */
@@ -410,7 +424,13 @@ button[disabled]:not(.clicked){
 	background-color: #83b6ff;
 	border-width: 5px;
 	border-color: dodgerblue;
+	animation: anim_focus 1s;
+	animation-iteration-count: 1;
+	transform:scale(1.1) rotate(-6deg) translateY(10px);
+	transition: cubic-bezier(0.6, -0.28, 0.735, 0.045) 2s;
   }
+
+ 
   
   /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
   @media screen and (max-height: 450px) {
