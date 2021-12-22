@@ -31,6 +31,8 @@ function appendMenuTxt(txt=""){
     txtDsp.innerHTML=txt;
     content.appendChild(txtDsp);
 }
+
+
 function clearMenuTxt(){
     const content = document.querySelector("#menu_txt");
     content.innerHTML="";
@@ -58,20 +60,56 @@ function infoMenu(){
 
 function categoriesMenu(){
     clearMenuTxt();
-    appendMenuTxt(`Quiz categories:`);
+    appendMenuTxt(`Quiz categories. Select one for future quiz:`);
 	fetchCategories()
-		.then(printCategories)
-        .then(showCategories)
-		.catch((err) => {
-			console.log('ERROR when fetching categories!', err);
-		});
+    .then(printCategories)
+    .then(showCategories)
+    .catch((err) => {
+        console.log('ERROR when fetching categories!', err);
+    });
 }
+
+function showCategories(){
+    console.log(categories);
+    categories.forEach(category => {
+        appendMenuTxt();    
+        appendCategoryButton(category.id, category.name);    
+    })  
+} 
+
+function appendCategoryButton(category_id, category_name, fnc="" ){
+    const content = document.querySelector("#menu_txt");
+    const menuElement = document.createElement('button');
+    menuElement.type = "button";
+    menuElement.innerHTML = `use category "${category_id}": "${category_name}"`;
+    menuElement.addEventListener("click", (event) => {
+        console.log(event.target);
+        console.log(` CLICKED id: "${category_id}" name: "${category_name}"`);    
+        setCategoryInUrl(category_id);
+
+    })
+    content.lastChild.appendChild(menuElement);
+}
+
+function setCategoryInUrl(category_id){
+    // console.log(quizzUrl);
+    // var newUrl="";
+    const re = /category=/g;
+    var newUrl=quizzUrl.replace(/(category=)[0-9]+/g,`$1${category_id}`);
+    if (!newUrl.match(/category=/g)){
+        // console.log("appending");
+        newUrl=`${quizzUrl}&category=${category_id}`;
+    }
+    saveURL(newUrl);
+    // console.log(quizzUrl);
+}
+
 
 function updateURLMenu(){
     clearMenuTxt();
     appendMenuTxt(`Currently used quiz URL: ${quizzUrl}`);
     appendMenuTxt(`New quiz URL:`);
-
+    
     // form
     const content = document.querySelector("#menu_txt");
     const inputTxt = document.createElement('input');
@@ -112,12 +150,6 @@ function saveURL(url){
     }
 }
 
-function showCategories(){
-    console.log(categories);
-    categories.forEach(category => {
-        appendMenuTxt(` - id: "${category.id}" name: "${category.name}"`);    
-    })  
-} 
 
 function clearStorageMenu(){
     clearMenuTxt();
