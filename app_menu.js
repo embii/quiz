@@ -72,8 +72,12 @@ function categoriesMenu(){
 function showCategories(){
     console.log(categories);
     categories.forEach(category => {
-        appendMenuTxt();    
-        appendCategoryButton(category.id, category.name);    
+        fetchCategory(category.id)
+        .then(printCategory)
+        .then((cat)=>{
+            appendMenuTxt(`- Category "${category.id}": "${category.name}" contains ${cat.category_question_count.total_question_count} questions`);    
+            appendCategoryButton(category.id, category.name);    
+        })
     })  
 } 
 
@@ -81,7 +85,8 @@ function appendCategoryButton(category_id, category_name, fnc="" ){
     const content = document.querySelector("#menu_txt");
     const menuElement = document.createElement('button');
     menuElement.type = "button";
-    menuElement.innerHTML = `use category "${category_id}": "${category_name}"`;
+    // menuElement.innerHTML = `use category "${category_id}": "${category_name}"`;
+    menuElement.innerHTML = `use "${category_name}"`;
     menuElement.addEventListener("click", (event) => {
         console.log(event.target);
         console.log(` CLICKED id: "${category_id}" name: "${category_name}"`);    
