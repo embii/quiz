@@ -56,6 +56,15 @@ function infoMenu(){
     for (const [key, value] of Object.entries(storage)){
         appendMenuTxt(` - ${key}: "${value}"`);    
     }; 
+    
+	// grab some app file
+	fetchVersion()
+    .then((data)=>{
+		console.log(data);
+	})
+    .catch((err) => {
+        console.log('ERROR when fetching app version!', err);
+    });
 }
 
 function categoriesMenu(){

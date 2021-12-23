@@ -17,3 +17,11 @@ const printCategory = ({ data }) => {
 	return Promise.resolve(data);
 };
 
+
+
+var appVersionUrl = `https://https://github.com/embii/quiz/index.html`;
+
+const fetchVersion = (url) => {
+	console.log(url);
+	return axios.get(`${url}`);
+};

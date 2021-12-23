@@ -20,6 +20,7 @@ const questionNrDsp = document.querySelector("#question_number");
 const footDsp = document.querySelector("#foot");
 var storage = null;
 var apiToken = null;
+var appVersion = null;
 
 // const quizzUrl='https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple';
 // const quizzUrl = `https://opentdb.com/api.php?amount=10&type=multiple&category=30`;
@@ -242,7 +243,7 @@ const finalScore = () => {
 		}
 	}
 	if (isMax == 1) {
-		fireworksInitiate(5,15, 200,3000);
+		fireworksInitiate(5, 15, 200, 3000);
 		playSound("res\\Wow-sound-effect.mp3");
 	} else {
 		playSound("res\\Goal-horn-sound-effect.mp3");
@@ -336,7 +337,9 @@ function start() {
 };
 
 // initialize();
+//// code ///////////////////////
 
+// do after load
 document.addEventListener("DOMContentLoaded", function () {
 	if (storageAvailable('localStorage')) {
 		// Yippee! We can use localStorage awesomeness
@@ -344,10 +347,18 @@ document.addEventListener("DOMContentLoaded", function () {
 		quizzUrl = storage.getItem("QUIZ_URL") ?? quizzUrl;
 		maxScore = storage.getItem("MAX_SCORE") ?? maxScore;
 		apiToken = storage.getItem("API_TOKEN") ?? apiToken;
+		appVersion = storage.getItem("VERSION") ?? appVersion;
 	}
 	else {
 		alert('Too bad, no localStorage for us');
 	}
 	start();
 	initializeMenu();
+	// prevent back
+	window.history.pushState(null, null, window.location.href);
+	window.onpopstate = function () {
+		window.history.go(1);
+	};
+
+
 });
