@@ -56,7 +56,7 @@ function infoMenu(){
     for (const [key, value] of Object.entries(storage)){
         appendMenuTxt(` - ${key}: "${value}"`);    
     };     
-    isNewVersion();
+    checkNewVersion();
 }
 
 function categoriesMenu(){
