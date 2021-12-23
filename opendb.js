@@ -21,7 +21,15 @@ const printCategory = ({ data }) => {
 var appVersionUrl = `https://embii.github.io/quiz/dist/version.json`;
 const fetchVersion = (url=appVersionUrl) => {
 	console.log(url);
-	return axios.get(`${url}`);
+	return axios.get(`${url}`,
+    {
+      // query URL without using browser cache
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    });
 };
 const initiateVersion=() =>{
     fetchVersion()
