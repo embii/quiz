@@ -19,7 +19,7 @@ const printCategory = ({ data }) => {
 
 
 
-var appVersionUrl = `https://github.com/embii/quiz/index.html`;
+var appVersionUrl = `https://embii.github.io/quiz/index.html`;
 
 const fetchVersion = (url=appVersionUrl) => {
 	console.log(url);

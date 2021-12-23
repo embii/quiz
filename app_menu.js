@@ -61,6 +61,8 @@ function infoMenu(){
 	fetchVersion()
     .then((data)=>{
 		console.log(data);
+        storage.setItem("VERSION",appVersion);
+        appendMenuTxt(`App version saved.`);
 	})
     .catch((err) => {
         console.log('ERROR when fetching app version!', err);
