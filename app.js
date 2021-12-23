@@ -18,6 +18,7 @@ const scoreDsp = document.querySelector("#score");
 const categoryDsp = document.querySelector("#category p");
 const questionNrDsp = document.querySelector("#question_number");
 const footDsp = document.querySelector("#foot");
+const menuMainDsp = document.querySelector("#menu_main");
 var storage = null;
 var apiToken = null;
 var appVersion = null;
@@ -185,6 +186,12 @@ function afterAnswer() {
 	nextBtn.focus();
 };
 function afterQuizz() {
+	checkNewVersion();
+	// if (newVersion){
+	// 	menuMainDsp.classList.add("is_new_version");
+	// }
+
+	
 	const nextBtn = document.createElement('button');
 	nextBtn.type = 'button';
 	nextBtn.classList.add("new_answer");
@@ -348,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		quizzUrl = storage.getItem("QUIZ_URL") ?? quizzUrl;
 		maxScore = storage.getItem("MAX_SCORE") ?? maxScore;
 		apiToken = storage.getItem("API_TOKEN") ?? apiToken;
-		checkVersion();
+		checkNewVersion();
 		appVersion = storage.getItem("VERSION") ?? appVersion;
 	}
 	else {

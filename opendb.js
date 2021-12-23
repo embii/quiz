@@ -35,25 +35,22 @@ const initiateVersion=() =>{
     fetchVersion()
     .then(({data})=>{
         console.log(data);
-        const remoteVersion = data.hash;
-        if (appVersion != remoteVersion) {
-            appVersion=remoteVersion;
-            storage.setItem("VERSION",appVersion);
-            console.log(`New app version saved to local storage.`);
-        }
+        appVersion = data.hash;
+        storage.setItem("VERSION",appVersion);
     })
     .catch((err) => {
         console.log('ERROR when fetching app version!', err);
     });
 } 
-const checkVersion=() =>{
+const checkNewVersion=() =>{
     fetchVersion()
     .then(({data})=>{
         console.log(data);
         const remoteVersion = data.hash;
         if (appVersion != remoteVersion) {
             newVersion =1; 
-            appendMenuTxt(`New version is available.  &#x1F60A; Please reload.`);
+            appendMenuTxt(`New version is available. Please reload. &#x2757; &#x1F60A; `);
+            menuMainDsp.classList.add("is_new_version");
         }
     })
     .catch((err) => {
