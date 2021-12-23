@@ -23,3 +23,32 @@ const fetchVersion = (url=appVersionUrl) => {
 	console.log(url);
 	return axios.get(`${url}`);
 };
+const initiateVersion=() =>{
+    fetchVersion()
+    .then(({data})=>{
+        console.log(data);
+        const remoteVersion = data.hash;
+        if (appVersion != remoteVersion) {
+            appVersion=remoteVersion;
+            storage.setItem("VERSION",appVersion);
+            console.log(`New app version saved to local storage.`);
+        }
+    })
+    .catch((err) => {
+        console.log('ERROR when fetching app version!', err);
+    });
+} 
+const checkVersion=() =>{
+    fetchVersion()
+    .then(({data})=>{
+        console.log(data);
+        const remoteVersion = data.hash;
+        if (appVersion != remoteVersion) {
+            newVersion =1; 
+            appendMenuTxt(`New version is available.  &#x1F60A; Please reload.`);
+        }
+    })
+    .catch((err) => {
+        console.log('ERROR when fetching app version!', err);
+    });
+} 

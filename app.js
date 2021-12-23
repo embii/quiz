@@ -348,20 +348,15 @@ document.addEventListener("DOMContentLoaded", function () {
 		quizzUrl = storage.getItem("QUIZ_URL") ?? quizzUrl;
 		maxScore = storage.getItem("MAX_SCORE") ?? maxScore;
 		apiToken = storage.getItem("API_TOKEN") ?? apiToken;
+		checkVersion();
 		appVersion = storage.getItem("VERSION") ?? appVersion;
 	}
 	else {
 		alert('Too bad, no localStorage for us');
 	};
-	
-	fetch("./dist/version.json")
-	.then(response => {
-   		return response.json();
-	})
-	.then(data => console.log(data));
-	
 	start();
 	initializeMenu();
+	initiateVersion();
 	// prevent back
 	window.history.pushState(null, null, window.location.href);
 	window.onpopstate = function () {
