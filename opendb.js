@@ -17,8 +17,6 @@ const printCategory = ({ data }) => {
 	return Promise.resolve(data);
 };
 
-
-
 // var appVersionUrl = `https://embii.github.io/quiz/index.html`;
 var appVersionUrl = `https://embii.github.io/quiz/dist/version.json`;
 const fetchVersion = (url=appVersionUrl) => {

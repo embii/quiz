@@ -21,6 +21,7 @@ const footDsp = document.querySelector("#foot");
 var storage = null;
 var apiToken = null;
 var appVersion = null;
+var newVersion = 0;
 
 // const quizzUrl='https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple';
 // const quizzUrl = `https://opentdb.com/api.php?amount=10&type=multiple&category=30`;
@@ -351,7 +352,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 	else {
 		alert('Too bad, no localStorage for us');
-	}
+	};
+	
+	fetch("./dist/version.json")
+	.then(response => {
+   		return response.json();
+	})
+	.then(data => console.log(data));
+	
 	start();
 	initializeMenu();
 	// prevent back

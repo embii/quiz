@@ -59,13 +59,22 @@ function infoMenu(){
     
 	// grab some app file
 	fetchVersion()
-    .then((data)=>{
+    .then(({data})=>{
 		console.log(data);
-        storage.setItem("VERSION",appVersion);
-        appendMenuTxt(`App version saved.`);
+        const remoteVersion = data.hash;
+        const localData= require('dist/version.json'); 
+        console.log(localData);
+        if (appVersion != remoteVersion) {
+            storage.setItem("VERSION",appVersion);
+            appendMenuTxt(`New app version saved to local storage.`);
+            newVersion =1; 
+        }
+        if (newVersion){
+            appendMenuTxt(`New version is available.  &#x1F60A; Please reload.`);
+        }
 	})
     .catch((err) => {
-        console.log('ERROR when fetching app version!', err);
+        console.log('ERROR when fetching app version!  &#x1F60A; ', err);
     });
 }
 
