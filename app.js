@@ -359,6 +359,4 @@ document.addEventListener("DOMContentLoaded", function () {
 	window.onpopstate = function () {
 		window.history.go(1);
 	};
-
-
 });

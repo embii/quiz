@@ -19,9 +19,9 @@ const printCategory = ({ data }) => {
 
 
 
-var appVersionUrl = `https://https://github.com/embii/quiz/index.html`;
+var appVersionUrl = `https://github.com/embii/quiz/index.html`;
 
-const fetchVersion = (url) => {
+const fetchVersion = (url=appVersionUrl) => {
 	console.log(url);
 	return axios.get(`${url}`);
 };
