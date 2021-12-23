@@ -48,9 +48,9 @@ const checkNewVersion=() =>{
         console.log(data);
         const remoteVersion = data.hash;
         if (appVersion != remoteVersion) {
-            newVersion =1; 
             appendMenuTxt(`New version is available. Please reload. &#x2757; &#x1F60A; `);
-            menuMainDsp.classList.add("is_new_version");
+            document.querySelector("#menu_main").classList.add("is_new_version");
+            document.querySelector("#menu_info").classList.add("is_new_version");
         }
     })
     .catch((err) => {

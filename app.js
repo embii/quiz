@@ -18,7 +18,6 @@ const scoreDsp = document.querySelector("#score");
 const categoryDsp = document.querySelector("#category p");
 const questionNrDsp = document.querySelector("#question_number");
 const footDsp = document.querySelector("#foot");
-const menuMainDsp = document.querySelector("#menu_main");
 var storage = null;
 var apiToken = null;
 var appVersion = null;

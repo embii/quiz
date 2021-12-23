@@ -43,7 +43,7 @@ function openMenu() {
     const menuClose = document.querySelector("#menu_close");
     menuClose.focus();
     document.getElementById("myNav").style.width = "100%";
-    
+    checkNewVersion();
 }
 function closeMenu() {
     document.getElementById("myNav").style.width = "0%";

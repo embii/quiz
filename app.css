@@ -11,7 +11,7 @@
 	border-color: dodgerblue;
 }
 /* #menu_main>.new_version::after  { */
-#menu_main.is_new_version::after  {
+#menu_main.is_new_version::after, #menu_info.is_new_version::after  {
 	font-size: small;
 	content: " \1F60A \2757";
 	animation: anim_shake 3s infinite;
