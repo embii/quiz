@@ -18,7 +18,7 @@ const printCategory = ({ data }) => {
 };
 
 // var appVersionUrl = `https://embii.github.io/quiz/index.html`;
-var appVersionUrl = `https://embii.github.io/quiz/dist/version.json`;
+var appVersionUrl = `https://embii.github.io/quiz/dist/version.json?timestamp=${new Date().getTime()}`;
 const fetchVersion = (url=appVersionUrl) => {
 	console.log(url);
 	return axios.get(`${url}`,
