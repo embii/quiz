@@ -12,3 +12,4 @@ source of questions is https://opentdb.com/
 ## ToDo
 - button for max score reset
 - release notes in menu
+- add some validation question prior to to cleanig of local storage

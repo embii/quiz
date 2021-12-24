@@ -51,12 +51,12 @@ function closeMenu() {
 
 function infoMenu(){
     clearMenuTxt();
-    appendMenuTxt(`Quiz URL: ${quizzUrl}`);
-    appendMenuTxt(`Local storage:`);
+    appendMenuTxt(`<h1>Local storage: </h1>`);
     for (const [key, value] of Object.entries(storage)){
         appendMenuTxt(` - ${key}: "${value}"`);    
     };     
     checkNewVersion();
+    appendMenuTxt(`<h1>README:</h1> <a href="${readmeUrl}">${readmeUrl}</a>`);
 }
 
 function categoriesMenu(){
@@ -73,7 +73,7 @@ function categoriesMenu(){
 function showCategories(){
     console.log(categories);
     // appendAllCategoriesButton();
-    appendCategoryButton("", "ANY CATEGORY");    
+    appendCategoryButton("", "<b>ANY CATEGORY</b>");    
     categories.forEach(category => {
         fetchCategory(category.id)
         .then(printCategory)

@@ -26,6 +26,7 @@ var newVersion = 0;
 // const quizzUrl='https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple';
 // const quizzUrl = `https://opentdb.com/api.php?amount=10&type=multiple&category=30`;
 var quizzUrl = `https://opentdb.com/api.php?amount=10&type=multiple`;
+const readmeUrl=`https://github.com/embii/quiz/blob/main/README.md`;
 var maxScore = null;
 
 const fetchApiToken = (url = 'https://opentdb.com/api_token.php?command=request') => {
