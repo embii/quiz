@@ -61,7 +61,7 @@ function infoMenu(){
 
 function categoriesMenu(){
     clearMenuTxt();
-    appendMenuTxt(`Quiz categories. Select one for future quiz:`);
+    appendMenuTxt(`<h1>Quiz categories.</h1> Select one category from the list below for future quiz or `);
 	fetchCategories()
     .then(printCategories)
     .then(showCategories)
@@ -72,6 +72,8 @@ function categoriesMenu(){
 
 function showCategories(){
     console.log(categories);
+    // appendAllCategoriesButton();
+    appendCategoryButton("", "ANY CATEGORY");    
     categories.forEach(category => {
         fetchCategory(category.id)
         .then(printCategory)
@@ -82,26 +84,28 @@ function showCategories(){
     })  
 } 
 
-function appendCategoryButton(category_id, category_name, fnc="" ){
+function appendCategoryButton(category_id, category_name){
     const content = document.querySelector("#menu_txt");
     const menuElement = document.createElement('button');
     menuElement.type = "button";
-    // menuElement.innerHTML = `use category "${category_id}": "${category_name}"`;
-    menuElement.innerHTML = `use "${category_name}"`;
+    if (category_id){
+        menuElement.innerHTML = `use "${category_name}"` ;
+    } else{
+        menuElement.innerHTML = `use ${category_name}`;
+    }
     menuElement.addEventListener("click", (event) => {
         console.log(event.target);
         console.log(` CLICKED id: "${category_id}" name: "${category_name}"`);    
         setCategoryInUrl(category_id);
-
     })
     content.lastChild.appendChild(menuElement);
 }
 
-function setCategoryInUrl(category_id){
+function setCategoryInUrl(category_id="?"){
     // console.log(quizzUrl);
     // var newUrl="";
     const re = /category=/g;
-    var newUrl=quizzUrl.replace(/(category=)[0-9]+/g,`$1${category_id}`);
+    var newUrl=quizzUrl.replace(/(category=)[0-9]*/g,`$1${category_id}`);
     if (!newUrl.match(/category=/g)){
         // console.log("appending");
         newUrl=`${quizzUrl}&category=${category_id}`;
