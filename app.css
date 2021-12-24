@@ -7,6 +7,12 @@
 	animation-iteration-count: 1;
 }
 
+button:focus::after {
+	font-size: xx-large;
+	content: " \1F384";
+	display: inline-block;
+	transform: rotate(30deg) translate(10px, 0);
+}
 #menu_main:focus{
 	border-color: dodgerblue;
 }
