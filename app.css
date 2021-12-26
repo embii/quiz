@@ -66,6 +66,10 @@ img {
 	border-color: cornflowerblue;
 	border-style: solid;
 	color:cornflowerblue;
+    background-image: url(res/xm-tree-small.png);
+    background-size: 10%;
+    background-repeat: no-repeat;
+    background-position: 100% 0%;
 }
 
 #category {
@@ -92,6 +96,7 @@ img {
 	padding-right: 10px;
 	/* margin: 10px; */
 	width: 100%;
+
 }
 
 #answers {
