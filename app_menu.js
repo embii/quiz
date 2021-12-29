@@ -25,17 +25,17 @@ function initializeMenu() {
     })
 };
 
-function appendMenuTxt(txt=""){
+function appendMenuTxt(txt = "") {
     const content = document.querySelector("#menu_txt");
     const txtDsp = document.createElement('p');
-    txtDsp.innerHTML=txt;
+    txtDsp.innerHTML = txt;
     content.appendChild(txtDsp);
 }
 
 
-function clearMenuTxt(){
+function clearMenuTxt() {
     const content = document.querySelector("#menu_txt");
-    content.innerHTML="";
+    content.innerHTML = "";
 }
 
 function openMenu() {
@@ -49,77 +49,98 @@ function closeMenu() {
     document.getElementById("myNav").style.width = "0%";
 }
 
-function infoMenu(){
+function infoMenu() {
     clearMenuTxt();
     appendMenuTxt(`<h1>Local storage: </h1>`);
-    for (const [key, value] of Object.entries(storage)){
-        appendMenuTxt(` - ${key}: "${value}"`);    
-    };     
+    for (const [key, value] of Object.entries(storage)) {
+        appendMenuTxt(` - ${key}: "${value}"`);
+    };
     checkNewVersion();
     appendMenuTxt(`<h1>README:</h1> <a href="${readmeUrl}">${readmeUrl}</a>`);
 }
 
-function categoriesMenu(){
+function categoriesMenu() {
     clearMenuTxt();
     appendMenuTxt(`<h1>Quiz categories.</h1> Select one category from the list below for future quiz or `);
-	fetchCategories()
-    .then(printCategories)
-    .then(showCategories)
-    .catch((err) => {
-        console.log('ERROR when fetching categories!', err);
-    });
+    fetchCategories()
+        .then(printCategories)
+        .then(showCategories)
+        .catch((err) => {
+            console.log('ERROR when fetching categories!', err);
+        });
 }
 
-function showCategories(){
+function showCategories() {
     console.log(categories);
     // appendAllCategoriesButton();
-    appendCategoryButton("", "<b>ANY CATEGORY</b>");    
+    appendRandomCategoryButton("", "<b>RANDOM</b> category");
+    appendCategoryButton("", "<b>ANY</b> category");
     categories.forEach(category => {
         fetchCategory(category.id)
-        .then(printCategory)
-        .then((cat)=>{
-            appendMenuTxt(`- Category "${category.id}": "${category.name}" contains ${cat.category_question_count.total_question_count} questions`);    
-            appendCategoryButton(category.id, category.name);    
-        })
-    })  
-} 
+            .then(printCategory)
+            .then((cat) => {
+                appendMenuTxt(`- Category "${category.id}": "${category.name}" contains ${cat.category_question_count.total_question_count} questions`);
+                appendCategoryButton(category.id, category.name);
+            })
+    })
+}
 
-function appendCategoryButton(category_id, category_name){
+function appendCategoryButton(category_id, category_name) {
     const content = document.querySelector("#menu_txt");
     const menuElement = document.createElement('button');
     menuElement.type = "button";
-    if (category_id){
-        menuElement.innerHTML = `use "${category_name}"` ;
-    } else{
+    if (category_id) {
+        menuElement.innerHTML = `use "${category_name}"`;
+    } else {
         menuElement.innerHTML = `use ${category_name}`;
     }
     menuElement.addEventListener("click", (event) => {
         console.log(event.target);
-        console.log(` CLICKED id: "${category_id}" name: "${category_name}"`);    
+        console.log(` CLICKED id: "${category_id}" name: "${category_name}"`);
         setCategoryInUrl(category_id);
+        saveRandomCategory(0);
+
     })
     content.lastChild.appendChild(menuElement);
 }
 
-function setCategoryInUrl(category_id="?"){
+function appendRandomCategoryButton(category_id = "", category_name = "RANDOM") {
+    const content = document.querySelector("#menu_txt");
+    const menuElement = document.createElement('button');
+    menuElement.type = "button";
+    if (category_id) {
+        menuElement.innerHTML = `use "${category_name}"`;
+    } else {
+        menuElement.innerHTML = `use ${category_name}`;
+    }
+    menuElement.addEventListener("click", (event) => {
+        console.log(event.target);
+        console.log(` CLICKED id: "${category_id}" name: "${category_name}"`);
+        // setCategoryInUrl(category_id);
+        saveRandomCategory(1);
+    })
+    content.lastChild.appendChild(menuElement);
+}
+
+function setCategoryInUrl(category_id = "?") {
     // console.log(quizzUrl);
     // var newUrl="";
     const re = /category=/g;
-    var newUrl=quizzUrl.replace(/(category=)[0-9]*/g,`$1${category_id}`);
-    if (!newUrl.match(/category=/g)){
+    var newUrl = quizzUrl.replace(/(category=)[0-9]*/g, `$1${category_id}`);
+    if (!newUrl.match(/category=/g)) {
         // console.log("appending");
-        newUrl=`${quizzUrl}&category=${category_id}`;
+        newUrl = `${quizzUrl}&category=${category_id}`;
     }
     saveURL(newUrl);
     // console.log(quizzUrl);
 }
 
 
-function updateURLMenu(){
+function updateURLMenu() {
     clearMenuTxt();
     appendMenuTxt(`Currently used quiz URL: ${quizzUrl}`);
     appendMenuTxt(`New quiz URL:`);
-    
+
     // form
     const content = document.querySelector("#menu_txt");
     const inputTxt = document.createElement('input');
@@ -148,25 +169,35 @@ function updateURLMenu(){
     appendMenuTxt(`For more details check https://opentdb.com/`);
 }
 
-function saveURL(url){
+function saveURL(url) {
     console.log(url);
-    quizzUrl=url;
-    if(storage){
-        storage.setItem("QUIZ_URL",quizzUrl);
+    quizzUrl = url;
+    if (storage) {
+        storage.setItem("QUIZ_URL", quizzUrl);
         appendMenuTxt(`Quiz URL saved.`);
-    }else{
+    } else {
         appendMenuTxt(`Local storage is not available in this browser.`);
         appendMenuTxt(`Quiz URL changed teporarily.`);
     }
 }
 
+function saveRandomCategory(random = 1) {
+    randomCategory = random;
+    if (storage) {
+        storage.setItem("RANDOM_CATEGORY", randomCategory);
+        appendMenuTxt(`RANDOM_CATEGORY ${randomCategory} saved.`);
+    } else {
+        appendMenuTxt(`Local storage is not available in this browser.`);
+        appendMenuTxt(`Random category changed teporarily to ${randomCategory}`);
+    }
+}
 
-function clearStorageMenu(){
+function clearStorageMenu() {
     clearMenuTxt();
-    if(storage){
-		storage.clear();
+    if (storage) {
+        storage.clear();
         appendMenuTxt(`Local storage cleared.`);
-	}else{
+    } else {
         appendMenuTxt(`Local storage is not available in this browser.`);
     }
 }

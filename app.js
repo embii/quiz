@@ -21,7 +21,9 @@ const footDsp = document.querySelector("#foot");
 var storage = null;
 var apiToken = null;
 var appVersion = null;
+var randomCategory = 0;
 var newVersion = 0;
+var badSound=null;
 
 // const quizzUrl='https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple';
 // const quizzUrl = `https://opentdb.com/api.php?amount=10&type=multiple&category=30`;
@@ -83,11 +85,36 @@ const printCategories = ({ data }) => {
 	return Promise.resolve(categories);
 };
 
+async function randomizeCategory() {
+	if (!categories || categories.length==0){
+		console.log("fetching categories");
+		await fetchCategories()
+        .then(printCategories)
+        .catch((err) => {
+            console.log('ERROR when fetching categories!', err);
+        });
+	}
+	if (categories  && categories.length>0){
+		console.log(categories);
+
+		const randomCategory = categories[Math.floor(Math.random() * categories.length)].id; 
+		setCategoryInUrl(randomCategory);
+		console.log(`random category set to: ${randomCategory}`);
+	}else{
+	       console.log('ERROR no categories!');
+        };
+}
+
 function playSound(file = 'res\\button-11.mp3') {
+	if (badSound && typeof(badSound)=="object"){
+		badSound.pause();
+		badSound=null;
+	};
 	const audio = new Audio(file);
 	audio.autoplay = "true";
 	// audio.muted="false";
 	audio.play();
+	return audio;
 };
 
 const putQuestion = (question) => {
@@ -148,6 +175,7 @@ async function checkAnswer(question, btn) {
 	if (he.decode(question.correct_answer).trim() === btn.innerText.trim()) {
 		score++;
 		playSound('res\\Quiz-correct-sound-with-applause.mp3');
+		playSound("res\\ho-ho-ho.wav");
 		fireworksInitiate();
 	} else {
 		btn.classList.add("wrong");
@@ -254,7 +282,7 @@ const finalScore = () => {
 		fireworksInitiate(5, 15, 200, 3000);
 		playSound("res\\Wow-sound-effect.mp3");
 	} else {
-		playSound("res\\Goal-horn-sound-effect.mp3");
+		badSound=playSound("res\\Goal-horn-sound-effect.mp3");
 	}
 	afterQuizz();
 };
@@ -286,6 +314,9 @@ function initialize() {
 	}
 	score = 0;
 	questionNr = 0;
+	if (randomCategory){
+		randomizeCategory();
+	}
 	fetchNextQuizz(quizzUrl)
 		.then(printQuizz)
 		.catch((err) => {
@@ -357,6 +388,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		apiToken = storage.getItem("API_TOKEN") ?? apiToken;
 		checkNewVersion();
 		appVersion = storage.getItem("VERSION") ?? appVersion;
+		randomCategory = storage.getItem("RANDOM_CATEGORY") ?? randomCategory;
 	}
 	else {
 		alert('Too bad, no localStorage for us');
