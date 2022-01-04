@@ -12,7 +12,8 @@ body {
 
 button:focus::after {
 	font-size: xx-large;
-	content: " \1F384";
+	/* content: " \1F384"; */
+	content: "\1F448";
 	display: inline-block;
 	transform: rotate(30deg) translate(10px, 0);
 }
@@ -67,7 +68,8 @@ img {
 	border-style: solid;
 	color:cornflowerblue;
     background-image: url(res/xm-tree-small.png);
-    background-size: 10%;
+    background-image: url(res/new-year-gc0af09869_1280.png);
+    background-size: 20%;
     background-repeat: no-repeat;
     background-position: 100% 0%;
 }
