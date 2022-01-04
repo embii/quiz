@@ -3,6 +3,8 @@ simple quiz
 source of questions is https://opentdb.com/ 
 
 ## Relese notes
+- selector 
+- 2022
 - random category
 - horn is interrupted by button click
 - ho ho ho 
