@@ -16,6 +16,7 @@ source of questions is https://opentdb.com/
 - handling of browser's back button
 
 ## ToDo 
+- add source https://trivia.willfry.co.uk/example
 - button for max score reset
 - release notes in menu
 - add some validation question prior to to cleanig of local storage
