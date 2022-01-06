@@ -1,6 +1,7 @@
 # quiz 
-simple quiz 
-source of questions is https://opentdb.com/ 
+simple quiz https://embii.github.io/quiz/ 
+utilizing open sources of questions
+- https://opentdb.com/ 
 
 ## Relese notes
 - selector 
